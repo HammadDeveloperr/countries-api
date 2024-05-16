@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Country Info</title>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+  <h1>Country Information</h1>
+  <div id="country-info">
+    <p id="country-name"></p>
+    <p id="population"></p>
+    <img id="flag" src="" alt="Flag of the country" width="200">
+  </div>
+
+  <script>
+    let name = prompt("Enter the name of a country");
+    axios.get(`https://restcountries.com/v3.1/name/${name}`)
+      .then(function (response) {
+        // handle success
+        let country = response.data[0];
+        document.getElementById('country-name').textContent = `Country: ${country.name.common}`;
+        document.getElementById('population').textContent = `Population: ${country.population.toLocaleString()}`;
+        document.getElementById('flag').src = country.flags.png;
+        document.getElementById('flag').alt = `Flag of ${country.name.common}`;
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+        alert('Error: Could not retrieve country information. Please try again.');
+      });
+  </script>
+</body>
+</html>
